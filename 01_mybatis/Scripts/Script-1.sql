@@ -13,4 +13,5 @@ SELECT * FROM tab;
 	insert into student values (seq_student.nextval, '홍길동', '01012345678', 'honggd@google.com','서울시 강남구', default);
 
 SELECT * FROM STUDENT WHERE student_no=1;
+SELECT * FROM STUDENT;
 SELECT * FROM user_sequences;

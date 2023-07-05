@@ -45,6 +45,33 @@
 				</c:forEach>
 			</table>
 		</c:if>
-	</ul>
+				<li>학생이름 : <c:out value="${s['STUDENT_NAME']}"/></li>
+				<li>학생전화번호 : <c:out value="${s['STUDENT_TEL'] }"/></li>
+				<li>학생이메일 : <c:out value="${s['STUDENT_EMAIL'] }"/></li>
+				<li>학생주소 : <c:out value="${s['STUDENT_ADDR'] }"/></li>
+				<li>학생등록일 : <c:out value="${s['REG_DATE'] }"/></li>
+		<c:if test="${list.size()>0}">
+			<table>
+				<tr>
+					<th>번호</th>
+					<th>이름</th>
+					<th>전화번호</th>
+					<th>이메일</th>
+					<th>주소</th>
+					<th>등록일</th>
+				</tr>
+				<c:forEach var="s" items="${list}">
+					<tr>
+						<td><c:out value="${s['STUDENT_NO'] }"/></td>
+						<td><c:out value="${s['STUDENT_NAME'] }"/></td>
+						<td><c:out value="${s['STUDENT_TEL'] }"/></td>
+						<td><c:out value="${s['STUDENT_EMAIL'] }"/></td>
+						<td><c:out value="${s['STUDENT_ADDR'] }"/></td>
+						<td><fmt:formatDate value="${s['REG_DATE'] }"/></td>
+					</tr>
+				</c:forEach>
+			</table>
+		</c:if>
+		</ul>
 </body>
 </html>
