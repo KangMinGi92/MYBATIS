@@ -92,4 +92,13 @@
 	<select id="selectStudentListMap" resultType="map">
 		SELECT * FROM STUDENT
 	</select>
+	<select id="selectStudentPage" resultMap="studentMap">
+		<!-- 
+			SELECT * FROM (SELECT ROWNUM AS RNUM, S.* FROM())
+			기존 OJDBC에서는 페이징 처리시 ROW을 전부 써줘야 했지만 MYBATIS는 중복되는 부분을 제거해서 가장 안쪽에있는 SELECT부분에 쓸 내용만
+			작성해주면 알아서 처리해준다. 
+		-->
+		SELECT * FROM STUDENT ORDER BY STUDENT_NO DESC
+	</select>
+	
 </mapper>

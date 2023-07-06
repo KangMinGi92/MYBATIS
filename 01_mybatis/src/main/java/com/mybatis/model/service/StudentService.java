@@ -96,4 +96,11 @@ public class StudentService {
 		session.close();
 		return result;
 	}
+	public List<Student> selectStudentPage(int cPage, int numPerpage){
+		SqlSession session=getSession();
+		List<Student> result=dao.selectStudentPage(session,cPage,numPerpage);
+		session.close();
+		return result;
+		
+	}
 }
