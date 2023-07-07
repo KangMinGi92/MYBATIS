@@ -2,23 +2,51 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="employee">
 	<resultMap id="empMap" type="emp">
+		<!--
+			 DB데이터가 1:1관계일때는  -> association 태그를 이용해서 연결
+			 result태그의 *마지막*에 사용
+			 id태그가 설정되어 있어야 한다.
+		 -->
 		<id property="empId" column="emp_id"/>
 		<result property="empName" column="EMP_NAME"/>
 		<result property="empNo" column="EMP_NO"/>
-		<result property="deptCode" column="DEPT_CODE"/>
+		<!-- <result property="deptCode" column="DEPT_CODE"/> -->
 		<result property="jobCode" column="JOB_CODE"/>
 		<result property="salLevel" column="SAL_LEVEL"/>
 		<result property="managerId" column="MANAGER_ID"/>
 		<result property="hireDate" column="HIRE_DATE"/>
 		<result property="entDate" column="ENT_DATE"/>
 		<result property="entYn" column="ENT_YN"/>
+		<!--
+			association 사용하기 전에는 필드명이랑 컬럼명이 같으면 생략해도 됐지만,
+			association 태그를 사용하면 매칭이 안되기 때문에 전부 기재해줘야한다.
+		  -->
+		<result property="email" column="email"/>
+		<result property="phone" column="phone"/>
+		<result property="bonus" column="bonus"/>
+		<result property="salary" column="salary"/>
+		
+<!-- 	기존JOin 했던 내가 했던 방식	
 		<result property="deptId" column="DEPT_ID"/>
-		<result property="deptTitle" column="DEPT_TITLE"/>
 		<result property="locationId" column="LOCATION_ID"/>
-		<result property="jobName" column="JOB_NAME"/>
+		<result property="deptTitle" column="DEPT_TITLE"/>
+		<result property="jobName" column="JOB_NAME"/> -->
+		<association property="dept" resultMap="departmentMap"/>
 	</resultMap>
+	<resultMap id="departmentMap" type="department">
+		<id property="deptId" column="dept_id"/>
+		<result property="deptTitle" column="dept_title"/>
+		<result property="locationId" column="location_id"/>
+		<!--1:다 관계일때는 collection 태그 사용  -->
+		<collection property="employees" resultMap="empMap"/>
+	</resultMap>
+	
+	<select id="selectAllDept" resultMap="departmentMap">
+		SELECT * FROM DEPARTMENT LEFT JOIN EMPLOYEE ON DEPT_CODE=DEPT_ID 
+	</select>
+	
 	<select id="selectAllEmp" resultMap="empMap">
-		SELECT * FROM EMPLOYEE JOIN DEPARTMENT ON DEPT_CODE=DEPT_ID JOIN JOB USING(JOB_CODE)
+		SELECT * FROM EMPLOYEE
 	</select>
 	<!--
 		파라미터값을 가져올때

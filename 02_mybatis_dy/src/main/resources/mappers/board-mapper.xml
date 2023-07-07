@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="board">
+	<resultMap id="boardMap" type="board">
+		<id property="boardNo" column="board_no"/>
+		<result property="boardTitle" column="board_title"/>
+		<result property="boardWriter" column="board_Writer"/>
+		<result property="boardContent" column="board_Content"/>
+		<result property="boardOriginalFilename" column="board_original_filename"/>
+		<result property="boardRenamedFilename" column="board_renamed_filename"/>
+		<result property="boardDate" column="board_date"/>
+		<result property="boardReadcount" column="board_readcount"/>
+		<association property="members" resultMap="memberMap"/>
+		<!-- 
+			<collection property="comments" resultMap="commentMap"/>
+			resultMap 으로 불러와도 되지만 보기 편하게 ofType으로 불러와서 세팅해줄 수 있다.
+		-->
+		<collection property="comments" ofType="comment">
+			<id property="boardCommentNo" column="board_comment_no"/>
+			<result property="boardCommentLevel" column="board_comment_level"/>
+			<!-- <result property="boardCommentWriter" column="board_comment_writer"/> -->
+			<result property="boardCommentContent" column="board_comment_content"/>
+			<result property="boardRef" column="board_ref"/>
+			<result property="boardCommentRef" column="board_comment_ref"/>
+			<result property="boardCommentDate" column="board_comment_date"/>
+			<result property="boardCommentWriter" column="board_comment_writer"/>
+		</collection>
+	</resultMap>
+	
+<!-- 	<resultMap id="commentMap" type="comment">
+		<id property="boardCommentNo" column="board_comment_no"/>
+		<result property="boardCommentLevel" column="board_comment_level"/>
+		<result property="boardCommentWriter" column="board_comment_writer"/>
+		<result property="boardCommentContent" column="board_comment_content"/>
+		<result property="boardRef" column="board_ref"/>
+		<result property="boardCommentRef" column="board_comment_ref"/>
+		<result property="boardCommentDate" column="board_comment_date"/>
+	</resultMap> -->
+	
+	<resultMap id="memberMap" type="member">
+		<id property="userid" column="userid"/>
+		<result property="password" column="password"/>
+		<result property="username" column="username"/>
+		<result property="gender" column="gender"/>
+		<result property="age" column="age"/>
+		<result property="email" column="email"/>
+		<result property="phone" column="phone"/>
+		<result property="address" column="address"/>
+		<!--DB에 저장되어있는 배열값 불러올 때 typeHandler를 사용하지만, DB에 배열 저장은 무결성 위배 되기 떄문에 잘 사용하지 않는다.  -->
+		<result property="hobby" column="hobby" typeHandler="strArrType"/>
+		<result property="enrolldate" column="enrolldate"/>
+	</resultMap>
+  	<select id="selectBoardByNo" resultMap="boardMap" parameterType="_int">
+  		SELECT * FROM BOARD 
+  			LEFT JOIN BOARD_COMMENT ON BOARD_NO=BOARD_REF 
+  			JOIN MEMBER ON BOARD_WRITER=USERID 
+  		WHERE BOARD_NO = #{no}
+  	</select>
+</mapper>

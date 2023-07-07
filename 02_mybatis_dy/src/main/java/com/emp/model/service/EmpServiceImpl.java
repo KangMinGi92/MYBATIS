@@ -4,10 +4,12 @@ import static com.emp.common.SessionTemplate.getSession;
 
 import java.util.List;
 import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 
 import com.emp.model.dao.EmpDao;
 import com.emp.model.dao.EmpDaoImpl;
+import com.emp.model.dto.Department;
 import com.emp.model.dto.Employee;
 
 public class EmpServiceImpl implements EmpService {
@@ -24,6 +26,13 @@ public class EmpServiceImpl implements EmpService {
 	public List<Employee> searchEmp(Map<String, Object> param) {
 		SqlSession session=getSession();
 		List<Employee> list=dao.searchEmp(session, param);
+		session.close();
+		return list;
+	}
+	@Override
+	public List<Department> selectAllDept(){
+		SqlSession session=getSession();
+		List<Department> list=dao.selectAllDept(session);
 		session.close();
 		return list;
 	}

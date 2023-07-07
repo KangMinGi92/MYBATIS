@@ -7,7 +7,12 @@
 		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
 	<typeAliases>
-	<typeAlias type="com.emp.model.dto.Employee" alias="emp"/>
+		<typeAlias type="com.emp.model.dto.Employee" alias="emp"/>
+		<typeAlias type="com.emp.model.dto.Department" alias="department"/>
+		<typeAlias type="com.web.model.dto.Board" alias="board"/>
+		<typeAlias type="com.web.model.dto.BoardComment" alias="comment"/>
+		<typeAlias type="com.web.model.dto.Member" alias="member"/>
+		<typeAlias type="com.emp.common.StringArrayTypeHandler" alias="strArrType"/>
 	</typeAliases>
  	<environments default="BS">
  		<environment id="BS">
@@ -23,8 +28,20 @@
 			<property name="password" value="${pw}"/>
  			</dataSource>
  		</environment>
+ 		
+ 		<environment id="web">
+ 			<transactionManager type="JDBC"/>
+ 			<dataSource type="POOLED">
+				<property name="driver" value="${driver}"/>
+				<property name="url" value="${url}"/>
+				<property name="username" value="web"/>
+				<property name="password" value="web"/>
+ 			</dataSource>
+ 		</environment>
  	</environments>
 	<mappers>
-		<mapper resource="/mappers/employee-mapper.xml"></mapper> 	
+		<mapper resource="/mappers/employee-mapper.xml"></mapper>
+		<mapper resource="/mappers/member-mapper.xml"></mapper>
+		<mapper resource="/mappers/board-mapper.xml"></mapper>
  	</mappers>
  </configuration>

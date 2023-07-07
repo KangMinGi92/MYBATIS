@@ -57,8 +57,8 @@
 		vo객체와 resultset의 컬럼명이 불일치할때 resultType에 resultMap을 이용해서 맵핑시켜줄 수 있다.
 		<resultMap id="구분" type="">
 		id는 primary key / result는 일반컬럼
-		<id property="type에 설정된 객체의 필드명" column="resultset컬럼명">
-		<result property="type에 설정된 객체의 필드명" column="resultset컬럼명">
+		<id property="type에 설정된 객체의 필드명(대소문자 구별함!)" column="resultset컬럼명(대소문자 구별안함!)">
+		<result property="type에 설정된 객체의 필드명(대소문자 구별함!)" column="resultset컬럼명(대소문자 구별안함!)">
 		<association>
 		<collection> 
 	-->
